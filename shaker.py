@@ -1,14 +1,18 @@
 
+import serial
+import time
+
 class FiberShaker(object):
     """
     Write description here
     """
 
-    def __init__(self):
+    def __init__(self, port = 'COM3', baud = 9600):
         """
         This function should probably handle connecting to the arduino (set baud rate, port, etc.) using pyserial
         """
-        print(3+3)
+        self.arduino = serial.Serial(port, baud)
+        time.sleep(2)
 
     def on(self):
         """
@@ -16,7 +20,7 @@ class FiberShaker(object):
         :return:
             result code
         """
-        return
+        self.arduino.write(str(1).encode())
 
     def off(self):
         """
@@ -24,14 +28,14 @@ class FiberShaker(object):
         :return:
             result code
         """
-        pass
+        self.arduino.write(str(0).encode())
 
     def get_status(self):
         """
 
         :return:
         """
-        pass
+        raise NotImplementedError
 
 
 shaker = FiberShaker()
