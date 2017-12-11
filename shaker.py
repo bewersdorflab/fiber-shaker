@@ -35,17 +35,12 @@ class FiberShaker(object):
     def off(self):
         """
         turn off the shaker
-        :return:
-            result code
         """
         self.arduino.write(str(0).encode())
         print("Arduino Off")
 
 
     def get_status(self):
-        """
-        :return:
-        """
         return NotImplementedError
 
 shaker = FiberShaker()
