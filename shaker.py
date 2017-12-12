@@ -45,7 +45,4 @@ class FiberShaker(object):
 
 shaker = FiberShaker()
 shaker.on()
-time.sleep(2)
-print("waiting")
-time.sleep(2)
-shaker.off()
+
