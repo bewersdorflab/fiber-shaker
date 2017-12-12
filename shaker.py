@@ -9,19 +9,31 @@ class FiberShaker(object):
     Write description here
     """
 
-    def __init__(self, baud = 9600):
+    def __init__(self, port=None, baud=9600):
         """
-        Finds Arduino and establishes serial connection. Adapted from: stackoverflow.com/questions/24214643
-        """
-        port = [
-            p.device
-            for p in serial.tools.list_ports.comports()
-            if 'Arduino' in p.description
-        ]
-        if not port:
-            raise IOError("No Arduino Found")
 
-        self.arduino = serial.Serial(port[0],baud)
+        Finds Arduino and establishes serial connection. Adapted from: stackoverflow.com/questions/24214643
+
+        Parameters
+        ----------
+        port : str
+            com port id, e.g. 'COM8'
+        baud : int
+            baud rate to connect at
+        """
+        if not port:
+            # try to find arduino automatically
+            ports = [
+                p.device
+                for p in serial.tools.list_ports.comports()
+                if 'Arduino' in p.description
+            ]
+            try:
+                port = ports[0]
+            except IndexError:
+                raise IOError("No Arduino Found")
+
+        self.arduino = serial.Serial(port, baud)
         time.sleep(2)
 
     def on(self):
@@ -43,6 +55,7 @@ class FiberShaker(object):
     def get_status(self):
         return NotImplementedError
 
-shaker = FiberShaker()
-shaker.on()
+if __name__ == '__main__':
+    shaker = FiberShaker()
+    shaker.on()
 
