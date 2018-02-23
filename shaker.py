@@ -26,7 +26,7 @@ class FiberShaker(object):
             ports = [
                 p.device
                 for p in serial.tools.list_ports.comports()
-                if 'Arduino' in p.description
+                if (('Arduino' in p.description) or ('ACM' in p.description))
             ]
             try:
                 port = ports[0]
